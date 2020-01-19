@@ -1,0 +1,15 @@
+{
+    villaMaria: {
+        numExits: 1,
+        name: "Villa-Maria",
+        color: ["orange"]
+        direction: true,
+        isConnection: false,
+        exitStats: [[1, 1, "Monkland"]]}
+}
+
+
+let vendome = new Station(1,"Vendome",["orange"],true,false,
+    [[3, 1, "Vendome"]]);
+let placeSaintHenri = new Station(1,"Place-Saint-Henri",["orange"],true,false,
+    [[4, 3, "Only"]]);

@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Stations {
 
     private int numExits;
@@ -12,20 +14,20 @@ public class Stations {
      * Default empty Stations constructor
      */
     public Stations() {
-        super();
+        //super();
     }
 
     /**
      * Default Stations constructor
      */
-    public Stations(int numExits, String stationName, String lineColor, boolean direction, boolean isConnection, Strin g) {
-        super();
-        this.numExits = numExits;
-        this.stationName = stationName;
-        this.lineColor = lineColor;
-        this.direction = direction;
-        this.isConnection = isConnection;
-        this.g = g;
+    public Stations(int numExits, String stationName, String lineColor, boolean direction, boolean isConnection, String[][] exitStats) {
+        //super();
+        this.numExits = setNumExits(numExits);
+        this.stationName = setStationName(stationName);
+        this.lineColor = setLineColor(lineColor);
+        this.direction = setDirection(direction);
+        this.isConnection = setIsConnection(isConnection);
+        this.exitStats = setExitStats(exitStats);
     }
 
     /**
@@ -64,7 +66,7 @@ public class Stations {
      * Returns value of lineColor
      * @return
      */
-    public String getLineColor() {
+    public String getlineColor() {
         return lineColor;
     }
 
@@ -109,19 +111,19 @@ public class Stations {
     }
 
     /**
-     * Returns value of g
+     * Returns value of exitStats
      * @return
      */
-    public Strin getG() {
-        return g;
+    public String[][] getExitStats() {
+        return exitStats;
     }
 
     /**
-     * Sets new value of g
+     * Sets new value of exitStats
      * @param
      */
-    public void setG(Strin g) {
-        this.g = g;
+    public void setExitStats(String[][] exitStats) {
+        this.exitStats = exitStats;
     }
 
     /**
@@ -130,6 +132,6 @@ public class Stations {
      */
     @Override
     public String toString() {
-        return "Stations [numExits=" + numExits + ", stationName=" + stationName + ", lineColor=" + lineColor + ", direction=" + direction + ", isConnection=" + isConnection + ", g=" + g + "]";
+        return "Stations [numExits=" + numExits + ", stationName=" + stationName + ", lineColor=" + lineColor + ", direction=" + direction + ", isConnection=" + isConnection + ", exitStats=" + Arrays.deepToString(exitStats) + "]";
     }
 }

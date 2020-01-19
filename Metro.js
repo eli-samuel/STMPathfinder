@@ -1,5 +1,4 @@
 class Station {
-
     constructor(numExits, name, color, direction, isConnection, exitStats) {
         this.numExits = numExits;
         this.name = name;
@@ -65,71 +64,71 @@ function algorithm (start, finish) {
 
 
     const findLowestCostNode = (costs, visited) => {
-      const knownNodes = Object.keys(costs)
+        const knownNodes = Object.keys(costs)
 
-      const lowestCostNode = knownNodes.reduce((lowest, node) => {
-          if (lowest === null && !visited.includes(node)) {
-            lowest = node;
-          }
-          if (costs[node] < costs[lowest] && !visited.includes(node)) {
-            lowest = node;
-          }
-          return lowest;
-      }, null);
+        const lowestCostNode = knownNodes.reduce((lowest, node) => {
+            if (lowest === null && !visited.includes(node)) {
+                lowest = node;
+            }
+            if (costs[node] < costs[lowest] && !visited.includes(node)) {
+                lowest = node;
+            }
+            return lowest;
+        }, null);
 
-      return lowestCostNode
+        return lowestCostNode;
     };
 
     // function that returns the minimum cost and path to reach Finish
     const dijkstra = (city) => {
-      // track lowest cost to reach each node
-      const trackedCosts = Object.assign({finish: Infinity}, city.start);
+        // track lowest cost to reach each node
+        const trackedCosts = Object.assign({finish: Infinity}, city.start);
 
-      // track paths
-      const trackedParents = {finish: null};
-      for (let child in city.start) {
-        trackedParents[child] = 'start';
-      }
-
-      // track nodes that have already been visited
-      const visitedNodes = [];
-
-      // Set initial node. Pick lowest cost node.
-      let node = findLowestCostNode(trackedCosts, visitedNodes);
-
-      while (node) {
-        let costToReachNode = trackedCosts[node];
-        let childrenOfNode = city[node];
-
-        for (let child in childrenOfNode) {
-          let costFromNodetoChild = childrenOfNode[child]
-          let costToChild = costToReachNode + costFromNodetoChild;
-
-          if (!trackedCosts[child] || trackedCosts[child] > costToChild) {
-            trackedCosts[child] = costToChild;
-            trackedParents[child] = node;
-          }
+        // track paths
+        const trackedParents = {finish: null};
+        for (let child in city.start) {
+            trackedParents[child] = 'start';
         }
 
-        visitedNodes.push(node);
+        // track nodes that have already been visited
+        const visitedNodes = [];
 
-        node = findLowestCostNode(trackedCosts, visitedNodes);
-      }
+        // Set initial node. Pick lowest cost node.
+        let node = findLowestCostNode(trackedCosts, visitedNodes);
 
-      let optimalPath = ['finish'];
-      let parent = trackedParents.finish;
-      while (parent) {
-        optimalPath.push(parent);
-        parent = trackedParents[parent];
-      }
-      optimalPath.reverse();
+        while (node) {
+            let costToReachNode = trackedCosts[node];
+            let childrenOfNode = city[node];
 
-      const results = {
-        distance: trackedCosts.finish,
-        path: optimalPath
-      };
+            for (let child in childrenOfNode) {
+                let costFromNodetoChild = childrenOfNode[child]
+                let costToChild = costToReachNode + costFromNodetoChild;
 
-      return results;
+                if (!trackedCosts[child] || trackedCosts[child] > costToChild) {
+                    trackedCosts[child] = costToChild;
+                    trackedParents[child] = node;
+                }
+            }
+
+            visitedNodes.push(node);
+
+            node = findLowestCostNode(trackedCosts, visitedNodes);
+        }
+
+        let optimalPath = ['finish'];
+        let parent = trackedParents.finish;
+        while (parent) {
+            optimalPath.push(parent);
+            parent = trackedParents[parent];
+        }
+        optimalPath.reverse();
+
+        const results = {
+            distance: trackedCosts.finish,
+            path: optimalPath
+        };
+
+        return results;
     };
 
     console.log('dijkstra', dijkstra(city));
@@ -143,9 +142,7 @@ function algorithm (start, finish) {
         if (dijkstra(city).path[r] ==="berriUqam") arr.push("berriUqam");
     }
 
-
     console.log(arr);
-
     return arr;
 }
 
@@ -159,7 +156,6 @@ function calculation (startStation, endStation, midStation, exitStreet) {
     }
 
     if (!(endStation.color.includes(startStation.color[0]))) {
-
         for (let i=0; i<endStation.numExits; i++) {
             if (endStation.exitStats[i][2] === exitStreet) {
                 endCarDoor = [endStation.exitStats[i][0], endStation.exitStats[i][1]];
@@ -197,7 +193,7 @@ function calculation (startStation, endStation, midStation, exitStreet) {
             lower--;
             endR = true;
         }
-        else if (lower == 0 && midStation.exitStats[lower-1][0] >= endCarDoor[0]) { // problem here
+        else if (lower == 0 && midStation.exitStats[lower-1][0] >= endCarDoor[0]) {
             lower--;
             endR = true;
         }
@@ -229,62 +225,38 @@ function calculation (startStation, endStation, midStation, exitStreet) {
 }
 
 let stations = [
-    new Station(1,"snowdon",["orange", "blue"],true,true,
-    [[8, 3, "Open"],[7, 3, "Closed"],[6, 1, "Open"],[4, 3, "Closed"],[3, 2, "Open"],[2, 2, "Closed"]]),
-    new Station(1,"villaMaria",["orange"],true,false,
-    [[1, 1, "Monkland"]]),
-    new Station(1,"vendome",["orange"],true,false,
-    [[3, 1, "Vendome"]]),
-    new Station(1,"placeSaintHenri",["orange"],true,false,
-    [[4, 3, "Only"]]),
-    new Station(6,"lionelGroulx",["orange", "green"],true,true,
-    [[8, 3, "Open"],[7, 3, "Closed"],[6, 1, "Open"],[4, 3, "Closed"],[3, 2, "Open"],[2, 2, "Closed"]]),
-    new Station(1,"georgesVanier",["orange"],true,false,
-    [[2, 3, "Only"]]),
-    new Station(1,"lucienLallier",["orange"],true,false,
-    [[8, 1, "Only"]]),
-    new Station(1,"bonaventure",["orange"],true,false,
-    [[9, 2, "Only"]]),
-    new Station(1,"squareVictoria",["orange"],true,false,
-    [[1, 3, "Only"]]),
-    new Station(1,"placeDarmes",["orange"],true,false,
-    [[5, 1, "Only"]]),
-    new Station(1,"champDeMars",["orange"],true,false,
-    [[6, 3, "Only"]]),
-    new Station(1,"berriUqam",["orange", "green"],true,true,
-    [[8, 3, "Open"],[7, 3, "Closed"],[6, 1, "Open"],[4, 3, "Closed"],[3, 2, "Open"],[2, 2, "Closed"]]),
-    new Station(1,"sherbrooke",["orange"],true,false,
-    [[1, 2, "Only"]]),
-    new Station(1,"montRoyal",["orange"],true,false,
-    [[4, 3, "Only"]]),
-    new Station(1,"laurier",["orange"],true,false,
-    [[3, 3, "Only"]]),
-    new Station(1,"rosemont",["orange"],true,false,
-    [[6, 2, "Only"]]),
-    new Station(1,"beaubien",["orange"],true,false,
-    [[6, 2, "Only"]]),
-    new Station(1,"jeanTalon",["orange", "blue"],true,true,
-    [[8, 3, "Open"],[7, 3, "Closed"],[6, 1, "Open"],[4, 3, "Closed"],[3, 2, "Open"],[2, 2, "Closed"]]),
-    new Station(1,"atwater",["green"],true,false,
-    [[2, 2, "Dawson"], [8, 2, "Atwater"]]),
-    new Station(1,"guyConcordia",["green"],true,false,
-    [[1, 1, "Concordia University"], [9, 3, "St. Mathieu"]]),
-    new Station(1,"peel",["green"],true,false,
-    [[4, 1, "Only"]]),
-    new Station(1,"mcGill",["green"],true,false,
-    [[2, 3, "Only"]]),
-    new Station(1,"placeDesArts",["green"],true,false,
-    [[7, 3, "Only"]]),
-    new Station(1,"saintLaurent",["green"],true,false,
-    [[6, 2, "Only"]]), new Station(1,"coteDesNeiges",["blue"],true,false,
-    [[8, 3, "Only"]]), new Station(1,"universiteDeMontreal",["blue"],true,false,
-    [[8, 2, "Only"]]), new Station(1,"edouardMonpetit",["blue"],true,false,
-    [[5, 3, "Only"]]), new Station(1,"outremont",["blue"],true,false,
-    [[7, 2, "Only"]]), new Station(1,"acadie",["blue"],true,false,
-    [[8, 1, "Only"]]), new Station(1,"parc",["blue"],true,false,
-    [[1, 1, "Only"]]), new Station(1,"deCastelnau",["blue"],true,false,
-    [[1, 1, "Only"]])
- ];
+    new Station(1,"snowdon",["orange", "blue"],true,true,[[8, 3, "Open"],[7, 3, "Closed"],[6, 1, "Open"],[4, 3, "Closed"],[3, 2, "Open"],[2, 2, "Closed"]]),
+    new Station(1,"villaMaria",["orange"],true,false,[[1, 1, "Monkland"]]),
+    new Station(1,"vendome",["orange"],true,false,[[3, 1, "Vendome"]]),
+    new Station(1,"placeSaintHenri",["orange"],true,false,[[4, 3, "Only"]]),
+    new Station(6,"lionelGroulx",["orange", "green"],true,true,[[8, 3, "Open"],[7, 3, "Closed"],[6, 1, "Open"],[4, 3, "Closed"],[3, 2, "Open"],[2, 2, "Closed"]]),
+    new Station(1,"georgesVanier",["orange"],true,false,[[2, 3, "Only"]]),
+    new Station(1,"lucienLallier",["orange"],true,false,[[8, 1, "Only"]]),
+    new Station(1,"bonaventure",["orange"],true,false,[[9, 2, "Only"]]),
+    new Station(1,"squareVictoria",["orange"],true,false,[[1, 3, "Only"]]),
+    new Station(1,"placeDarmes",["orange"],true,false,[[5, 1, "Only"]]),
+    new Station(1,"champDeMars",["orange"],true,false,[[6, 3, "Only"]]),
+    new Station(1,"berriUqam",["orange", "green"],true,true,[[8, 3, "Open"],[7, 3, "Closed"],[6, 1, "Open"],[4, 3, "Closed"],[3, 2, "Open"],[2, 2, "Closed"]]),
+    new Station(1,"sherbrooke",["orange"],true,false,[[1, 2, "Only"]]),
+    new Station(1,"montRoyal",["orange"],true,false,[[4, 3, "Only"]]),
+    new Station(1,"laurier",["orange"],true,false,[[3, 3, "Only"]]),
+    new Station(1,"rosemont",["orange"],true,false,[[6, 2, "Only"]]),
+    new Station(1,"beaubien",["orange"],true,false,[[6, 2, "Only"]]),
+    new Station(1,"jeanTalon",["orange", "blue"],true,true,[[8, 3, "Open"],[7, 3, "Closed"],[6, 1, "Open"],[4, 3, "Closed"],[3, 2, "Open"],[2, 2, "Closed"]]),
+    new Station(1,"atwater",["green"],true,false,[[2, 2, "Dawson"], [8, 2, "Atwater"]]),
+    new Station(1,"guyConcordia",["green"],true,false,[[1, 1, "Concordia University"], [9, 3, "St. Mathieu"]]),
+    new Station(1,"peel",["green"],true,false,[[4, 1, "Only"]]),
+    new Station(1,"mcGill",["green"],true,false,[[2, 3, "Only"]]),
+    new Station(1,"placeDesArts",["green"],true,false,[[7, 3, "Only"]]),
+    new Station(1,"saintLaurent",["green"],true,false,[[6, 2, "Only"]]),
+    new Station(1,"coteDesNeiges",["blue"],true,false,[[8, 3, "Only"]]),
+    new Station(1,"universiteDeMontreal",["blue"],true,false,[[8, 2, "Only"]]),
+    new Station(1,"edouardMonpetit",["blue"],true,false,[[5, 3, "Only"]]),
+    new Station(1,"outremont",["blue"],true,false,[[7, 2, "Only"]]),
+    new Station(1,"acadie",["blue"],true,false,[[8, 1, "Only"]]),
+    new Station(1,"parc",["blue"],true,false,[[1, 1, "Only"]]),
+    new Station(1,"deCastelnau",["blue"],true,false,[[1, 1, "Only"]])
+];
 
 let endStation = new Station(), startStation = new Station(), midStation = new Station(), newEndStation = new Station();
 
@@ -298,35 +270,28 @@ for (let i=0; i<stations.length; i++) {
     let j=0;
 
     for (j=0; j<stations.length; j++) {
-        if (stations[j].name === middle[1]) {
-            break;
-        }
+        if (stations[j].name === middle[1]) break;
     }
 
     if (middle.length>1 && stations[i].name === middle[0]
         && startStation.color[0] != stations[i].color[0]
         && endStation.color[0] != stations[j].color[0]) {
 
-        midStation = stations[i];
-        newEndStation = stations[j]
-        console.log(calculation(startStation, newEndStation, midStation, exitStreet)); // [x, y]
+            midStation = stations[i];
+            newEndStation = stations[j]
+            console.log(calculation(startStation, newEndStation, midStation, exitStreet)); // [x, y]
 
-        startStation = stations[i];
-        midStation = stations[j];
-        console.log(calculation(startStation, endStation, midStation, exitStreet)); // [x, y]
-
-        // do some math here
-    }
-    else if ((middle.length == 1 && stations[i].name === middle[0])
-        || (startStation.color[0] === stations[i].color[0]
-        || endStation.color[0] === stations[j].color[0])) {
-        midStation = stations[i];
-
-        console.log(calculation(startStation, endStation, midStation, exitStreet)); // [x, y]
-        break;
-    }
-    else if (middle.length == 0) {
-        console.log(calculation(startStation, endStation, midStation, exitStreet));
-        break;
-    }
-}
+            startStation = stations[i];
+            midStation = stations[j];
+            console.log(calculation(startStation, endStation, midStation, exitStreet)); // [x, y]
+        }
+        else if ((middle.length == 1 && stations[i].name === middle[0]) || (startStation.color[0] === stations[i].color[0] || endStation.color[0] === stations[j].color[0])) {
+                midStation = stations[i];
+                console.log(calculation(startStation, endStation, midStation, exitStreet)); // [x, y]
+                break;
+            }
+            else if (middle.length == 0) {
+                console.log(calculation(startStation, endStation, midStation, exitStreet));
+                break;
+            }
+        }

@@ -14,11 +14,11 @@ public class Pathfinder {
 
     for (int i=0; i<stations.length; i++) {
       stations[i] = new Stations(numExits[i], stationName[i], "orange", true, false);
-      stations[i].addStats({"2", "3", "Decarie", "5", "2", "Poopypants"});
+      stations[i].addStats({"2", "3", "Decarie", "5", "2", "a"});
     }
 
     Stations endStation = stations[2], startStation = stations[0];
-    String exitStreet = "Poopypants";
+    String exitStreet = "a";
 
     //pathfinding
 

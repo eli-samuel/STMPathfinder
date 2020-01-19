@@ -1,36 +1,55 @@
-const graph = {
-  M: {A: 7},
-  A: {B: 3, H: 9, C: 6, M: 7},
-  B: {A: 3},
-  C: {A: 6, D: 12, E: 2, I: 3, J: 3},
-  D: {C: 12},
-  E: {C: 2},
-  F: {G: 7, H: 4, I: 3, J: 3},
-  G: {F: 7},
-  H: {A: 9, F: 4, K: 6},
-  I: {C: 3, F: 3},
-  J: {C: 3, F: 3},
-  K: {H: 6}
+const city = {
+    snowdon: {villaMaria: 1, coteDesNeiges: 1}, // regex to read
+    villaMaria: {vendome: 1, snowdon: 1},
+    vendome: {placeSaintHenri: 1, villaMaria: 1},
+    placeSaintHenri: {lionelGroulx: 1, vendome: 1},
+    lionelGroulx: {georgesVanier: 1, atwater: 1, placeSaintHenri: 1},
+    georgesVanier: {lucienLallier: 1, lionelGroulx: 1},
+    lucienLallier: {bonaventure: 1, georgesVanier: 1},
+    bonaventure: {squareVictoria: 1, lucienLallier: 1},
+    squareVictoria: {placeDarmes: 1, bonaventure: 1},
+    placeDarmes: {champDeMars:1, squareVictoria: 1},
+    champDeMars: {berriUqam: 1, placeDarmes: 1},
+    berriUqam: {sherbrooke: 1, saintLaurent: 1, champDeMars: 1},
+    sherbrooke: {montRoyal: 1, berriUqam: 1},
+    montRoyal: {laurier: 1, sherbrooke: 1},
+    laurier: {rosemont: 1, montRoyal: 1},
+    rosemont: {beaubien: 1, laurier: 1},
+    beaubien: {jeanTalon: 1, rosemont: 1},
+    jeanTalon: {beaubien: 1, deCastelnau: 1},
+    atwater: {guyConcordia: 1, lionelGroulx: 1},
+    guyConcordia: {peel: 1, atwater: 1},
+    peel: {mcGill: 1, guyConcordia: 1},
+    mcGill: {placeDesArts: 1, peel: 1},
+    placeDesArts: {saintLaurent: 1, mcGill: 1},
+    saintLaurent: {berriUqam:1, placeDesArts: 1},
+    coteDesNeiges: {universiteDeMontreal: 1, snowdon: 1},
+    universiteDeMontreal: {edouardMonpetit: 1, coteDesNeiges: 1},
+    edouardMonpetit: {outremont: 1, universiteDeMontreal: 1},
+    outremont: {acadie: 1, edouardMonpetit: 1},
+    acadie: {parc: 1, outremont: 1},
+    parc: {deCastelnau: 1, acadie: 1},
+    deCastelnau: {jeanTalon: 1, parc: 1}
 };
 
-let start = 'C'; // This is the name of the starting location
-let finish = 'G'; // This is the name of the end location
 
-graph.start = graph[start];
-delete graph[start];
+let start = 'snowdon'; // This is the name of the starting location
+let finish = 'sherbrooke'; // This is the name of the end location
 
-graph.finish = graph[finish];
-delete graph[finish];
+city.start = city[start];
+delete city[start];
 
-for (var property in graph) {
-    if (Object.prototype.hasOwnProperty.call(graph, property)) {
-        // do stuff
-        if (graph[property].hasOwnProperty(start)) {
-            delete graph[property][start];
+city.finish = city[finish];
+delete city[finish];
+
+for (var property in city) {
+    if (Object.prototype.hasOwnProperty.call(city, property)) {
+        if (city[property].hasOwnProperty(start)) {
+            delete city[property][start];
         }
-        if (graph[property].hasOwnProperty(finish)) {
-            graph[property].finish = graph[property][finish];
-            delete graph[property][finish];
+        if (city[property].hasOwnProperty(finish)) {
+            city[property].finish = city[property][finish];
+            delete city[property][finish];
         }
     }
 }
@@ -53,18 +72,18 @@ const findLowestCostNode = (costs, visited) => {
 };
 
 // function that returns the minimum cost and path to reach Finish
-const dijkstra = (graph) => {
+const dijkstra = (city) => {
   console.log('Graph: ')
-  console.log(graph)
+  console.log(city)
 
   // track lowest cost to reach each node
-  const trackedCosts = Object.assign({finish: Infinity}, graph.start);
+  const trackedCosts = Object.assign({finish: Infinity}, city.start);
   console.log('Initial `costs`: ')
   console.log(trackedCosts)
 
   // track paths
   const trackedParents = {finish: null};
-  for (let child in graph.start) {
+  for (let child in city.start) {
     trackedParents[child] = 'start';
   }
   console.log('Initial `parents`: ')
@@ -81,7 +100,7 @@ const dijkstra = (graph) => {
   while (node) {
     console.log(`***** 'currentNode': ${node} *****`)
     let costToReachNode = trackedCosts[node];
-    let childrenOfNode = graph[node];
+    let childrenOfNode = city[node];
 
     for (let child in childrenOfNode) {
       let costFromNodetoChild = childrenOfNode[child]
@@ -119,6 +138,4 @@ const dijkstra = (graph) => {
   return results;
 };
 
-console.log('dijkstra', dijkstra(graph));
-
-console.log(graph);
+console.log('dijkstra', dijkstra(city));

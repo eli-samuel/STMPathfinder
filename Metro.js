@@ -10,42 +10,6 @@ class Station {
     }
 }
 
-let lionel = new Station(
-    6,
-    "Lionel Groulx",
-    ["orange", "green"],
-    true,
-    true,
-    [[8, 3, "Open"],
-    [7, 3, "Closed"],
-    [6, 1, "Open"],
-    [4, 3, "Closed"],
-    [3, 2, "Open"],
-    [2, 2, "Closed"]]
-);
-
-let peel = new Station(
-    1,
-    "Peel",
-    ["blue"],
-    true,
-    false,
-    [
-    [9, 3, "Only"], // carnum,doornum, exitname
-    ]
-);
-
-let snowdon = new Station(
-    1,
-    "Snowdon",
-    ["orange"],
-    true,
-    true,
-    [
-    [1, 1, "Only"], // carnum,doornum, exitname
-    ]
-);
-
 let stations = [];
 
 for (let i=0; i<10; i++) {
@@ -60,10 +24,10 @@ let startCarDoor = [], endCarDoor = [];
 
 // NEED SOMETHING TO CALCULATE THE FASTEST ROUTE (WHERE TO CHANGE LINES)
 
-startStation = peel;
-midStation = lionel;
-endStation = snowdon;
-exitStreet = "Only"; // FOR TESTING PURPOSES
+startStation = peel; // user in
+midStation = lionel; // pathfinding
+endStation = snowdon; // user in
+exitStreet = "Only"; // user in
 
 if (endStation.color.includes(startStation.color[0])) {
     for (let i=0; i<endStation.numExits; i++) {

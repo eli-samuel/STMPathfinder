@@ -1,4 +1,4 @@
-## STMPathfinder
+### MiniTransit
 
 ## Inspiration
 

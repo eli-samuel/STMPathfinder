@@ -20,17 +20,17 @@ public class Stations {
     /**
      * Default Stations constructor
      */
-    public Stations(int numExits, String stationName, String lineColor, boolean direction, boolean isConnection, String[][] exitStats) {
+    public Stations(int numExits, String stationName, String lineColor, boolean direction, boolean isConnection) {
         //super();
-        this.numExits = setNumExits(numExits);
-        this.stationName = setStationName(stationName);
-        this.lineColor = setLineColor(lineColor);
-        this.direction = setDirection(direction);
-        this.isConnection = setIsConnection(isConnection);
-        this.exitStats = setExitStats(exitStats);
+        setNumExits(numExits);
+        setStationName(stationName);
+        setLineColor(lineColor);
+        setDirection(direction);
+        setIsConnection(isConnection);
     }
 
-    /**
+
+	/**
      * Returns value of numExits
      * @return
      */
@@ -44,6 +44,7 @@ public class Stations {
      */
     public void setNumExits(int numExits) {
         this.numExits = numExits;
+        setExitStats(numExits);
     }
 
     /**
@@ -66,7 +67,7 @@ public class Stations {
      * Returns value of lineColor
      * @return
      */
-    public String getlineColor() {
+    public String getLineColor() {
         return lineColor;
     }
 
@@ -82,7 +83,7 @@ public class Stations {
      * Returns value of direction
      * @return
      */
-    public boolean isDirection() {
+    public boolean getIsDirection() {
         return direction;
     }
 
@@ -98,7 +99,7 @@ public class Stations {
      * Returns value of isConnection
      * @return
      */
-    public boolean isIsConnection() {
+    public boolean getIsConnection() {
         return isConnection;
     }
 
@@ -122,8 +123,18 @@ public class Stations {
      * Sets new value of exitStats
      * @param
      */
-    public void setExitStats(String[][] exitStats) {
-        this.exitStats = exitStats;
+    public void setExitStats(int exitStats) {
+        this.exitStats = new String[numExits][3];
+    }
+
+    public void addStats(String[] stats) {
+      int k=0;
+      for (int i=0; i<exitStats.length; i++) {
+        for (j=0 ;j<exitStats[i].length; j++) {
+          exitStats[i][j] = stats[k];
+          k++
+        }
+      }
     }
 
     /**

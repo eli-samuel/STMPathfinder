@@ -1,4 +1,4 @@
-### MiniTransit
+## MiniTransit
 
 ## Inspiration
 

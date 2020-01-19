@@ -221,11 +221,11 @@ function calculation (startStation, endStation, midStation, exitStreet) {
         }
     }
 
-    return startCarDoor
+    return startCarDoor;
 }
 
 let stations = [
-    new Station(1,"snowdon",["orange", "blue"],true,true,[[8, 3, "Open"],[7, 3, "Closed"],[6, 1, "Open"],[4, 3, "Closed"],[3, 2, "Open"],[2, 2, "Closed"]]),
+    new Station(6,"snowdon",["orange", "blue"],true,true,[[8, 3, "Open"],[7, 3, "Closed"],[6, 1, "Open"],[4, 3, "Closed"],[3, 2, "Open"],[2, 2, "Closed"]]),
     new Station(1,"villaMaria",["orange"],true,false,[[1, 1, "Monkland"]]),
     new Station(1,"vendome",["orange"],true,false,[[3, 1, "Vendome"]]),
     new Station(1,"placeSaintHenri",["orange"],true,false,[[4, 3, "Only"]]),
@@ -236,15 +236,15 @@ let stations = [
     new Station(1,"squareVictoria",["orange"],true,false,[[1, 3, "Only"]]),
     new Station(1,"placeDarmes",["orange"],true,false,[[5, 1, "Only"]]),
     new Station(1,"champDeMars",["orange"],true,false,[[6, 3, "Only"]]),
-    new Station(1,"berriUqam",["orange", "green"],true,true,[[8, 3, "Open"],[7, 3, "Closed"],[6, 1, "Open"],[4, 3, "Closed"],[3, 2, "Open"],[2, 2, "Closed"]]),
+    new Station(6,"berriUqam",["orange", "green"],true,true,[[8, 3, "Open"],[7, 3, "Closed"],[6, 1, "Open"],[4, 3, "Closed"],[3, 2, "Open"],[2, 2, "Closed"]]),
     new Station(1,"sherbrooke",["orange"],true,false,[[1, 2, "Only"]]),
     new Station(1,"montRoyal",["orange"],true,false,[[4, 3, "Only"]]),
     new Station(1,"laurier",["orange"],true,false,[[3, 3, "Only"]]),
     new Station(1,"rosemont",["orange"],true,false,[[6, 2, "Only"]]),
     new Station(1,"beaubien",["orange"],true,false,[[6, 2, "Only"]]),
-    new Station(1,"jeanTalon",["orange", "blue"],true,true,[[8, 3, "Open"],[7, 3, "Closed"],[6, 1, "Open"],[4, 3, "Closed"],[3, 2, "Open"],[2, 2, "Closed"]]),
-    new Station(1,"atwater",["green"],true,false,[[2, 2, "Dawson"], [8, 2, "Atwater"]]),
-    new Station(1,"guyConcordia",["green"],true,false,[[1, 1, "Concordia University"], [9, 3, "St. Mathieu"]]),
+    new Station(6,"jeanTalon",["orange", "blue"],true,true,[[8, 3, "Open"],[7, 3, "Closed"],[6, 1, "Open"],[4, 3, "Closed"],[3, 2, "Open"],[2, 2, "Closed"]]),
+    new Station(2,"atwater",["green"],true,false,[[2, 2, "Dawson"], [8, 2, "Atwater"]]),
+    new Station(6,"guyConcordia",["green"],true,false,[[1, 1, "Concordia University"], [9, 3, "St. Mathieu"]]),
     new Station(1,"peel",["green"],true,false,[[4, 1, "Only"]]),
     new Station(1,"mcGill",["green"],true,false,[[2, 3, "Only"]]),
     new Station(1,"placeDesArts",["green"],true,false,[[7, 3, "Only"]]),
@@ -260,15 +260,14 @@ let stations = [
 
 let endStation = new Station(), startStation = new Station(), midStation = new Station(), newEndStation = new Station();
 
-startStation = stations[stations.length-6]; // user in
-endStation = stations[6]; // user in
+startStation = stations[0]; // user in
+endStation = stations[7]; // user in
 exitStreet = "Only"; // user in
 
 let middle = algorithm(startStation.name, endStation.name);
 
 for (let i=0; i<stations.length; i++) {
     let j=0;
-
     for (j=0; j<stations.length; j++) {
         if (stations[j].name === middle[1]) break;
     }
@@ -283,15 +282,15 @@ for (let i=0; i<stations.length; i++) {
 
             startStation = stations[i];
             midStation = stations[j];
-            console.log(calculation(startStation, endStation, midStation, exitStreet)); // [x, y]
+            console.log(calculation(startStation, endStation, midStation, exitStreet));
         }
         else if ((middle.length == 1 && stations[i].name === middle[0]) || (startStation.color[0] === stations[i].color[0] || endStation.color[0] === stations[j].color[0])) {
-                midStation = stations[i];
-                console.log(calculation(startStation, endStation, midStation, exitStreet)); // [x, y]
-                break;
-            }
-            else if (middle.length == 0) {
-                console.log(calculation(startStation, endStation, midStation, exitStreet));
-                break;
-            }
+            midStation = stations[i];
+            console.log(calculation(startStation, endStation, midStation, exitStreet));
+            break;
         }
+        else if (middle.length == 0) {
+            console.log(calculation(startStation, endStation, midStation, exitStreet));
+            break;
+        }
+    }
